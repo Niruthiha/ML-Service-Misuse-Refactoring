@@ -20,8 +20,7 @@ This is an independent, standalone repository maintained for the extended work �
 ├── scripts/                  # Batch-analysis entry points
 ├── Results/                  # SANER 2026 detection results
 ├── repos_data.xlsx           # Input list of GitHub repositories to analyze
-└── TSE_Extension/
-    └── Refactoring/          # LLM-based detection comparison and refactoring artifacts
+└── Refactoring/              # LLM-based detection comparison and refactoring artifacts
 ```
 
 ## About MLmisFinder
@@ -85,23 +84,22 @@ Review the generated reports to identify the detected ML cloud service misuses.
 
 ## LLM-Based Detection and Refactoring Artifacts
 
-The GPT-5 detection comparison and LLM-based refactoring artifacts are available under [`TSE_Extension/Refactoring`](TSE_Extension/Refactoring):
+The GPT-5 detection comparison and LLM-based refactoring artifacts are available under [`Refactoring`](Refactoring):
 
 ```
-TSE_Extension/
-└── Refactoring/
-    ├── Evaluation/              # LLM-as-judge evaluation scripts and results (GPT, Gemma, LLaMA3, Qwen)
-    ├── ScalableRefactoring/     # Batch refactoring pipeline and per-model, per-misuse results
-    ├── batch_api/               # Refactoring artifacts: not using batch APIs for data processing
-    ├── data_drift/              # Refactoring artifacts: ignoring monitoring for data drift
-    ├── early_stopping/          # Refactoring artifacts: non-specification of early-stopping criteria
-    ├── improper_ml_api_limit/   # Refactoring artifacts: improper handling of ML API limits
-    ├── misinterpreting_output/  # Refactoring artifacts: misinterpreting model outputs
-    ├── preprocessing/           # Dataset preprocessing and prompt-preparation scripts
-    ├── schema_mismatch/         # Refactoring artifacts: ignoring testing-schema mismatches
-    ├── training_checkpoint/     # Refactoring artifacts: not using training checkpoints
-    ├── init/                    # Early refactoring pipeline prototype
-    └── test/                    # Exploratory scripts and test outputs
+Refactoring/
+├── Evaluation/              # LLM-as-judge evaluation scripts and results (GPT, Gemma, LLaMA3, Qwen)
+├── ScalableRefactoring/     # Batch refactoring pipeline and per-model, per-misuse results
+├── batch_api/               # Refactoring artifacts: not using batch APIs for data processing
+├── data_drift/              # Refactoring artifacts: ignoring monitoring for data drift
+├── early_stopping/          # Refactoring artifacts: non-specification of early-stopping criteria
+├── improper_ml_api_limit/   # Refactoring artifacts: improper handling of ML API limits
+├── misinterpreting_output/  # Refactoring artifacts: misinterpreting model outputs
+├── preprocessing/           # Dataset preprocessing and prompt-preparation scripts
+├── schema_mismatch/         # Refactoring artifacts: ignoring testing-schema mismatches
+├── training_checkpoint/     # Refactoring artifacts: not using training checkpoints
+├── init/                    # Early refactoring pipeline prototype
+└── test/                    # Exploratory scripts and test outputs
 ```
 
 Each misuse-type folder generally contains the refactoring script(s) for that misuse, the input instances (`instances_*.xlsx`), per-model execution-time logs (`model_timings*.txt`), and the resulting refactored code outputs (`refactored_code_outputs*.txt`).
