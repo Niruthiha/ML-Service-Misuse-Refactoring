@@ -1,0 +1,6 @@
+
+astpretty
+openpyxl
+pandas
+numpy
+gitpython 

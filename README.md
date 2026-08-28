@@ -1,0 +1,133 @@
+# LLM-Based Detection and Refactoring of ML Cloud Service Misuses 🕵️‍♂️🔧
+
+This repository contains the replication package for an extended body of work on detecting and automatically refactoring misuses of machine-learning cloud services. It builds on our earlier conference paper, **MLmisFinder**, and extends it with:
+
+* A comparison between GPT-5 and MLmisFinder for misuse detection.
+* An LLM-based pipeline for automatically refactoring detected misuses.
+* An evaluation of multiple LLMs for refactoring accuracy and execution time.
+* Manually annotated refactoring outputs.
+* A multi-model LLM-as-judge evaluation protocol.
+* Additional datasets, prompts, scripts, and experimental results.
+
+This is an independent, standalone repository maintained for the extended work — it is not a fork.
+
+## Repository Layout
+
+```
+.
+├── Detection Algorithms/    # MLmisFinder's rule-based misuse-detection algorithms
+├── detection/                # Detection pipeline source
+├── scripts/                  # Batch-analysis entry points
+├── Results/                  # SANER 2026 detection results
+├── repos_data.xlsx           # Input list of GitHub repositories to analyze
+└── TSE_Extension/
+    └── Refactoring/          # LLM-based detection comparison and refactoring artifacts
+```
+
+## About MLmisFinder
+
+**MLmisFinder** is an automated, provider-agnostic static-analysis approach for detecting misuses of machine-learning cloud services. It analyzes Python-based systems that use services from Amazon Web Services, Microsoft Azure, and Google Cloud, and is used in this repository as the baseline detector compared against GPT-5.
+
+MLmisFinder detects the following seven misuse types:
+
+1. Not using batch APIs for data processing.
+2. Not using training checkpoints.
+3. Non-specification of early-stopping criteria.
+4. Ignoring testing-schema mismatches.
+5. Misinterpreting model outputs.
+6. Improperly handling ML API limits.
+7. Ignoring monitoring for data drift.
+
+The tool uses a reusable metamodel and rule-based detection algorithms to identify misuse patterns without requiring runtime information. It was originally published as:
+
+> **MLmisFinder: A Specification and Detection Approach of Machine Learning Service Misuses**
+> Published at the 33rd IEEE International Conference on Software Analysis, Evolution and Reengineering (SANER 2026).
+
+## Installation
+
+Clone the repository and install the required dependencies:
+
+```bash
+git clone https://github.com/Niruthiha/ML-Service-Misuse-Refactoring.git
+cd ML-Service-Misuse-Refactoring
+pip install -r requirements.txt
+```
+
+## Running MLmisFinder (baseline detection)
+
+MLmisFinder can analyze a collection of GitHub repositories supplied through an Excel file.
+
+### Step 1: Prepare the input file
+
+Create an Excel file named `repos_data.xlsx` containing a column named `GitHub URL`.
+
+Example:
+
+| GitHub URL                    |
+| ----------------------------- |
+| https://github.com/user/repo1 |
+| https://github.com/user/repo2 |
+| https://github.com/user/repo3 |
+
+### Step 2: Add the input file
+
+Place `repos_data.xlsx` in the location expected by the analysis script.
+
+### Step 3: Run MLmisFinder
+
+```bash
+python scripts/run_all.py
+```
+
+### Step 4: Review the results
+
+Review the generated reports to identify the detected ML cloud service misuses.
+
+## LLM-Based Detection and Refactoring Artifacts
+
+The GPT-5 detection comparison and LLM-based refactoring artifacts are available under [`TSE_Extension/Refactoring`](TSE_Extension/Refactoring):
+
+```
+TSE_Extension/
+└── Refactoring/
+    ├── Evaluation/              # LLM-as-judge evaluation scripts and results (GPT, Gemma, LLaMA3, Qwen)
+    ├── ScalableRefactoring/     # Batch refactoring pipeline and per-model, per-misuse results
+    ├── batch_api/               # Refactoring artifacts: not using batch APIs for data processing
+    ├── data_drift/              # Refactoring artifacts: ignoring monitoring for data drift
+    ├── early_stopping/          # Refactoring artifacts: non-specification of early-stopping criteria
+    ├── improper_ml_api_limit/   # Refactoring artifacts: improper handling of ML API limits
+    ├── misinterpreting_output/  # Refactoring artifacts: misinterpreting model outputs
+    ├── preprocessing/           # Dataset preprocessing and prompt-preparation scripts
+    ├── schema_mismatch/         # Refactoring artifacts: ignoring testing-schema mismatches
+    ├── training_checkpoint/     # Refactoring artifacts: not using training checkpoints
+    ├── init/                    # Early refactoring pipeline prototype
+    └── test/                    # Exploratory scripts and test outputs
+```
+
+Each misuse-type folder generally contains the refactoring script(s) for that misuse, the input instances (`instances_*.xlsx`), per-model execution-time logs (`model_timings*.txt`), and the resulting refactored code outputs (`refactored_code_outputs*.txt`).
+
+Note: some of these artifacts were generated by running LLMs on real, scraped GitHub code samples as part of the misuse dataset. Any credentials or connection strings that appeared verbatim in those samples have been redacted from this repository.
+
+This section will be updated as new artifacts are finalized.
+
+## Citation
+
+If you use the MLmisFinder detection approach, please cite:
+
+```text
+Hadil Ben Amor, Niruthiha Selvanayagam, Manel Abdellatif,
+Taher A. Ghaleb, and Naouel Moha.
+“MLmisFinder: A Specification and Detection Approach of
+Machine Learning Service Misuses.”
+In Proceedings of the 33rd IEEE International Conference on
+Software Analysis, Evolution and Reengineering (SANER), 2026.
+DOI: 10.1109/SANER67736.2026.00037.
+```
+
+Citation information for the extended detection and refactoring work will be added once available.
+
+## Related Work
+
+This repository builds on the MLmisFinder approach and its original replication package, maintained by Hadil Ben Amor and collaborators:
+
+https://github.com/hadil1999-creator/MLmisFinder
